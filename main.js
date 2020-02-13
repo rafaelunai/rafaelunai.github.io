@@ -142,7 +142,10 @@ function getClassNames(indices) {
 load the class names 
 */
 async function loadDict() {
-    loc = 'modelo/classes.txt'
+    if (mode == 'ar')
+        loc = 'model2/class_names_ar.txt'
+    else
+        loc = 'model2/class_names.txt'
     
     await $.ajax({
         url: loc,
@@ -214,10 +217,12 @@ function preprocess(imgData) {
 /*
 load the model
 */
-async function start() {
+async function start(cur_mode) {
+    //arabic or english
+    mode = cur_mode
     
     //load the model 
-    model = await tf.loadLayersModel('modelo/model.json')
+    model = await tf.loadLayersModel('model2/model.json')
     
     //warm up 
     model.predict(tf.zeros([1, 28, 28, 1]))
@@ -234,7 +239,10 @@ allow drawing on canvas
 */
 function allowDrawing() {
     canvas.isDrawingMode = 1;
-    document.getElementById('status').innerHTML = 'Model Loaded';
+    if (mode == 'en')
+        document.getElementById('status').innerHTML = 'Model Loaded';
+    else
+        document.getElementById('status').innerHTML = 'تم التحميل';
     $('button').prop('disabled', false);
     var slider = document.getElementById('myRange');
     slider.oninput = function() {
