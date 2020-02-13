@@ -217,7 +217,7 @@ load the model
 async function start() {
     
     //load the model 
-    model = await tf.loadLayersModel('modelo/modelo.json')
+    model = await tf.loadLayersModel('modelo/model.json')
     
     //warm up 
     model.predict(tf.zeros([1, 28, 28, 1]))
